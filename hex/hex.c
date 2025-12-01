@@ -213,21 +213,16 @@ int is_space(char c){
 }
 //remueve los caracteres en blanco deel inicio y del final de la cadena 
 void trim (char* str){
-    int i =0;
-    while(is_space(str[i]) && str[i] != '\0') i++;
-    int j =0;
-    int k=0;
-    while (str[i] != '\0') str[j++] =str[i++];
-    str[j] ='\0';
-    while(is_space(str[k]) && k >= 0)k --;
-    str[k+1] ='\0';
-    while (str[i] != '\0'){
-            if(str[i] == '\n' || str[i] == '\r'){
-                str[i] = '\0';
-                break;
-            }
-            i++;
-        }
+
+ int start = 0;
+    int end = strlen(str) - 1;
+    while(str[start] && is_space(str[start])) start++;
+    while(end >= start && is_space(str[end])) end--;
+    int j = 0;
+    for(int i = start; i <= end; i++)
+        str[j++] = str[i];
+
+    str[j] = '\0'; // terminar la cadena
 }
 int read_move(const char* buffer, int size){
     char* buf_copy = malloc(strlen(buffer) + 1);
