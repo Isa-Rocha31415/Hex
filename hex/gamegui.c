@@ -149,7 +149,7 @@ int is_right(int ax,int ay, int bx,int by ){
 int in_hex(int x, int y, int px, int py){
     int r = HEX_R;
     int w = HEX_W;
-    int h = HEX_H;
+    int h = HEX_H1;
     
     int vx[] = {x + r, x + w, x - w, x - r, x - w, x + w};
     int vy[] = {y + 0, y + h, y + h, y + 0, y - h, y - h};
@@ -169,7 +169,7 @@ int in_hex(int x, int y, int px, int py){
 void draw_hex(int x0, int y0, rgb fill) {
     int r = HEX_R;
     int w = HEX_W;
-    int h = HEX_H;
+    int h = HEX_H1;
 
     int vx[6] = {x0 + r, x0 + w, x0 - w, x0 - r, x0 - w, x0 + w};
     int vy[6] = {y0, y0 + h, y0 + h, y0, y0 - h, y0 - h};
@@ -210,7 +210,7 @@ int get_hex_centers(int size, int i, int j, int* cx, int* cy){
     if(j < 0 || j >= size) return 0;
     
     *cx = i * (HEX_R + HEX_W) + j * (HEX_R + HEX_W);
-    *cy = i * HEX_H - j * HEX_H;
+    *cy = i * HEX_H1 - j * HEX_H1;
     
     return 1;
 }
@@ -249,7 +249,7 @@ int get_board_hex(int size, int px, int py, int* cx, int* cy){
     }
     return -1;
 }
-
+/*
 int main(){
     // Inicializar ventana gráfica
     gfx_open(WIN_W, WIN_H, "HEX Game");
@@ -301,3 +301,4 @@ int main(){
     printf("Game ended.\n");
     return 0;
 }
+    */
