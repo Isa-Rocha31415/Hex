@@ -8,6 +8,12 @@
 
  //dibuja el texto HEX
 void draw_hex_artistic_text(int x0, int y0, rgb color) {
+    /*
+        Dibuja el texto de HEX
+        REcibe las coordenadas (x,y) en formato de entero
+        Y la estructura rgb que es el color
+    */
+
     gfx_color(color.r, color.g, color.b);
     
     int h_pattern[7][7] = {
@@ -87,6 +93,15 @@ void draw_hex_artistic_text(int x0, int y0, rgb color) {
 
 //rectangulo con el texto
 void draw_hex_banner(int x0, int y0, int width, int height, rgb bg_color, rgb text_color) {
+    /**
+     * Recibe dos enteros x,y que son las coordenadas de inicializacion de dibujado del 
+     * banner
+     * Se define en entero el ancho y el alto del banner 
+     * Se define el color del fondo del banner y del color de texto
+     * No retorna nada
+     * Dibuja el banner con el texto
+     */
+
     // Dibujar fondo del banner
     gfx_color(bg_color.r, bg_color.g, bg_color.b);
     for(int dy = 0; dy < height; dy++){
@@ -113,6 +128,13 @@ void draw_hex_banner(int x0, int y0, int width, int height, rgb bg_color, rgb te
 }
 
 void draw_rectangle(int x0, int y0, int width, int height, rgb fill){
+    /*
+    REcibe las coordenadas de inicio de dibujado x0,y0 en entero
+    Ademas del entero del ancho y del alto 
+    Y la estructura rgb para el color del relleno del rectangulo
+    no retorna algo
+    Dibuja solo un rectangulo
+    */
     gfx_color(fill.r, fill.g, fill.b);
     for(int dy = 0; dy < height; dy++){
         for(int dx = 0; dx < width; dx++){
@@ -133,20 +155,38 @@ void draw_rectangle(int x0, int y0, int width, int height, rgb fill){
 }
 
 int sarea(int ax,int ay, int bx,int by){
+    //Calculo el producto vectorial de dos vectores, por lo tanto, el area
+    //Recibe en entero los componentes x,y de dos vectores
+    //Devuelve el area de estos dos vectores
     return (ax*by - ay*bx);
 }
 
 int is_left(int ax,int ay, int bx,int by ){
+    //Determina por medio del producto vectorial en donde se dio clic
+    //Recibe los dos componentes de dos vectores en x,y
+    //SI es positivo, devuelve 1 en que si esta a la izquierda
+    //SI es negativo regresa 0
     if(sarea(ax,ay,bx,by) > 0) return 1;
     return 0;
 }
 
 int is_right(int ax,int ay, int bx,int by ){
+    //Determina por medio del producto vectorial en donde se dio clic
+    //Recibe los dos componentes de dos vectores en x,y
+    //SI es negativo, devuelve 1 en que si esta a la derecha
+    //SI es positivo regresa 0
+
     if(sarea(ax,ay,bx,by) < 0) return 1;
     return 0;
 }
 
 int in_hex(int x, int y, int px, int py){
+    /**
+     * Determina que si, dado a unas coordenadas, un click fue dado a la derecha o la izquierda
+     * Y por lo tanto,determina si está dentro o fuera de un hexágono
+     * SI está a la derecha, implica que está afuera del hexágono y regresa 0, sino, regresa
+     * 1 diciendo que está dentro del hexágono
+     */
     int r = HEX_R;
     int w = HEX_W;
     int h = HEX_H1;
@@ -167,6 +207,11 @@ int in_hex(int x, int y, int px, int py){
 }
 
 void draw_hex(int x0, int y0, rgb fill) {
+    /*
+    Dibuja un hexágono dado puntos iniciales definidos como x0,y0 y el color de relleno
+    No retorna nada
+    Los dibuja a partir de puntos y vertices 
+    */
     int r = HEX_R;
     int w = HEX_W;
     int h = HEX_H1;
@@ -206,6 +251,12 @@ void draw_hex(int x0, int y0, rgb fill) {
 }
 
 int get_hex_centers(int size, int i, int j, int* cx, int* cy){
+    /*
+    Obtiene los centros de los hexágonos. se necesita el tamaño del tablero
+    los indices i,j para determinar cual hexágono 
+    Y finalmente dos valores que representan las coordenadas de los centroides
+    de los hexágonos
+    */
     if(i < 0 || i >= size) return 0;
     if(j < 0 || j >= size) return 0;
     
@@ -216,6 +267,12 @@ int get_hex_centers(int size, int i, int j, int* cx, int* cy){
 }
 
 void draw_board(int x0, int y0, int size){
+    /**
+     * Dibuja el tablero dado al tamaño entero y dos puntos iniciales enteros 
+     * No retorna nada
+     * El tablero lo dibuja de fondo con un gris claro y los hexágonos de color blanco
+     * 
+     */
     rgb white = {255, 255, 255};
     rgb light_gray = {240, 240, 240};
     int cx, cy;
@@ -234,6 +291,18 @@ void draw_board(int x0, int y0, int size){
 }
 
 int get_board_hex(int size, int px, int py, int* cx, int* cy){
+    /**
+     * SE le pasa el tamaño del tablero como entero
+     * Además, se le pasa las coordenadas de los píxeles que pulsa el usuario
+     * Y los valores de los centroides.
+     * La función transforma las coordenadas originales de hexágono, a las coordenadas
+     * que tendría el tablero, en específico el motor, 
+     * Sabiendo que el motor del tablero no se maneja por un vector 2D sino 1D, se tiene que
+     * transformar los indices para indicar donde fue pintado  
+     * 
+     * Si no está dentro del hexágono, regresa un -1, indicando que fue afuera del tablero
+     * 
+     */
     int x, y;
     
     for(int j = 0; j < size; j++){
